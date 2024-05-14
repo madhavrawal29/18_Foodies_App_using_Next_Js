@@ -27,7 +27,7 @@ export default function ShareMealPage() {
             </p>
             <p>
               <label htmlFor="email">Your email</label>
-              <input type="email" id="email" name="email" required />
+              <input type="email" id="email" name="email" />
             </p>
           </div>
           <p>
@@ -48,8 +48,10 @@ export default function ShareMealPage() {
             ></textarea>
           </p>
           <ImagePicker label="Your image" name="image" />
-          {state.message && <p>{state.message}</p>}
           <p className={classes.actions}>
+            {state.message && (
+              <p className={classes.invalidInput}>{state.message}</p>
+            )}
             <MealsFormSubmit />
           </p>
         </form>
