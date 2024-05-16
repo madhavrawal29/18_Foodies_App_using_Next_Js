@@ -13,8 +13,6 @@ export async function generateMetadata({ params }) {
   return {
     title: meal.title,
     description: meal.summary,
-    // url: `https://foodies-app.vercel.app/meals/${params.mealSlug}`,
-    // image: meal.image,
   };
 }
 
