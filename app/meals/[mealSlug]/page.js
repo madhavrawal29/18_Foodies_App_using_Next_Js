@@ -1,7 +1,22 @@
 import Image from "next/image";
-import classes from "./page.module.css";
 import { getMeal } from "@/lib/meals";
 import { notFound } from "next/navigation";
+import classes from "./page.module.css";
+
+export async function generateMetadata({ params }) {
+  const meal = getMeal(params.mealSlug);
+
+  if (!meal) {
+    notFound();
+  }
+
+  return {
+    title: meal.title,
+    description: meal.summary,
+    // url: `https://foodies-app.vercel.app/meals/${params.mealSlug}`,
+    // image: meal.image,
+  };
+}
 
 export default function MealDetailsPage({ params }) {
   const meal = getMeal(params.mealSlug);
