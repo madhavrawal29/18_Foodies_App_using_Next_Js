@@ -6,9 +6,37 @@ import ImagePicker from "@/components/meals/image-picker";
 import classes from "./page.module.css";
 import { ShareMeal } from "@/lib/actions";
 import MealsFormSubmit from "@/components/meals/meals-form-submit";
+import { useState } from "react";
+import { createPortal } from "react-dom";
 
 export default function ShareMealPage() {
   const [state, formAction] = useFormState(ShareMeal, { message: null });
+
+  const [open, setOpen] = useState(true);
+  function handleCloseModal() {
+    setOpen(false);
+  }
+
+  const invalidInputModal = (
+    <>
+      {state.message &&
+        createPortal(
+          <dialog
+            open={open}
+            onClose={handleCloseModal}
+            className={classes.modalContainer}
+          >
+            <div className={classes.modal}>
+              <p className={classes.invalidInput}>{state.message}</p>
+              <button className={classes.btnModal} onClick={handleCloseModal}>
+                Ok
+              </button>
+            </div>
+          </dialog>,
+          document.body
+        )}
+    </>
+  );
 
   return (
     <>
@@ -49,11 +77,9 @@ export default function ShareMealPage() {
           </p>
           <ImagePicker label="Your image" name="image" />
           <p className={classes.actions}>
-            {state.message && (
-              <p className={classes.invalidInput}>{state.message}</p>
-            )}
             <MealsFormSubmit />
           </p>
+          {invalidInputModal}
         </form>
       </main>
     </>
